@@ -60,17 +60,32 @@ def create_schema(db):
     db.commit()
 
 def seed_data(db):
-    """Populates the database with sample data."""
+    """Populates the database with a richer set of sample data."""
     cursor = db.cursor()
+    
+    # --- Add Classes ---
     classes_data = [
-        ('Yoga Flow', to_utc(datetime.datetime(2025, 7, 15, 8, 0), DEFAULT_TZ), 'Chloe', 20, 20),
-        ('HIIT Blast', to_utc(datetime.datetime(2025, 7, 15, 18, 0), DEFAULT_TZ), 'Mike', 15, 15),
+        # Upcoming classes
+        ('Yoga Flow', to_utc(datetime.datetime(2025, 7, 8, 8, 0), DEFAULT_TZ), 'Chloe', 20, 20),
+        ('HIIT Blast', to_utc(datetime.datetime(2025, 7, 8, 18, 30), DEFAULT_TZ), 'Mike', 15, 15),
+        ('Spin Cycle', to_utc(datetime.datetime(2025, 7, 9, 7, 0), DEFAULT_TZ), 'David', 25, 25),
+        ('CrossFit', to_utc(datetime.datetime(2025, 7, 9, 19, 0), DEFAULT_TZ), 'Sarah', 12, 10), # A class with some spots already taken
+        ('Meditation', to_utc(datetime.datetime(2025, 7, 15, 20, 0), DEFAULT_TZ), 'Anya', 30, 30),
+        
+        # A class that is fully booked
+        ('Power Lifting', to_utc(datetime.datetime(2025, 7, 10, 17, 0), DEFAULT_TZ), 'Mike', 5, 0),
+
+        # A class that has already passed (should not appear in the /classes list)
+        ('Morning Zumba', to_utc(datetime.datetime(2025, 7, 7, 9, 0), DEFAULT_TZ), 'Isabella', 25, 5)
     ]
     cursor.executemany('INSERT INTO Classes (name, start_time, instructor, capacity, available_slots) VALUES (?, ?, ?, ?, ?);', classes_data)
     
+    # --- Add Users ---
     users_data = [
-        ('Alice', 'alice@example.com', 'dummy_hash_1'), 
-        ('Bob', 'bob@example.com', 'dummy_hash_2')
+        ('Alice Johnson', 'alice@example.com', 'dummy_hash_1'), 
+        ('Bob Williams', 'bob@example.com', 'dummy_hash_2'),
+        ('Charlie Brown', 'charlie@example.com', 'dummy_hash_3'),
+        ('Diana Prince', 'diana@example.com', 'dummy_hash_4')
     ]
     cursor.executemany('INSERT INTO Users (name, email, password_hash) VALUES (?, ?, ?);', users_data)
     db.commit()
@@ -86,7 +101,5 @@ def init_db_command():
 
 def init_app(app):
     """Register database functions with the Flask app."""
-    # This ensures close_db is called when the app context is torn down.
     app.teardown_appcontext(close_db)
-    # Add the new command to the app, so it can be called from the command line.
     app.cli.add_command(init_db_command)

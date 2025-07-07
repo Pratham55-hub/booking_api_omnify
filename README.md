@@ -4,6 +4,7 @@ Fitness Studio Booking API
 A simple and robust booking API for a fictional fitness studio, built with Python and Flask. This API allows clients to view upcoming classes, book a spot, and view their existing bookings.
 
 Features
+
 View Classes: Get a list of all upcoming classes.
 
 Book a Spot: Book a spot in an available class.
@@ -35,13 +36,13 @@ If not, simply download and unzip the project files into a new directory.
 2. Create a Virtual Environment
 It's highly recommended to use a virtual environment to keep project dependencies isolated.
 
-# Create a virtual environment
+### Create a virtual environment
 python -m venv venv
 
-# Activate the virtual environment
-# On Windows:
+### Activate the virtual environment
+### On Windows:
 venv\Scripts\activate
-# On macOS/Linux:
+### On macOS/Linux:
 source venv/bin/activate
 
 3. Install Dependencies
@@ -54,15 +55,15 @@ pip install Flask pytz pytest
 4. Initialize the Database
 The application uses a CLI command to create the database file and populate it with initial data.
 
-# Make sure your FLASK_APP environment variable is set
-# On Windows (Command Prompt):
+### Make sure your FLASK_APP environment variable is set
+### On Windows (Command Prompt):
 set FLASK_APP=run.py
-# On Windows (PowerShell):
+### On Windows (PowerShell):
 $env:FLASK_APP="run.py"
-# On macOS/Linux:
+### On macOS/Linux:
 export FLASK_APP=run.py
 
-# Run the init-db command
+## Run the init-db command
 flask init-db
 
 You should see a message: Initialized the database. This will create an instance/fitness_studio.sqlite file in your project directory.
